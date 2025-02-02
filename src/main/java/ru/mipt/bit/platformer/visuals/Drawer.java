@@ -1,22 +1,17 @@
 package ru.mipt.bit.platformer.visuals;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Rectangle;
-import ru.mipt.bit.platformer.logics.Level;
-import ru.mipt.bit.platformer.logics.Tank;
+import ru.mipt.bit.platformer.models.Level;
+import ru.mipt.bit.platformer.models.Tank;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
-public class GdxDrawer implements Drawer {
+public class Drawer {
     private VisualLevel gdxLevel;
     private VisualObject gdxTank;
     private VisualObject gdxTree;
@@ -27,7 +22,7 @@ public class GdxDrawer implements Drawer {
     private Batch batch;
     private static TiledMapTileLayer groundLayer;
 
-    public GdxDrawer(Level level, Tank tank, VisualLevel gdxLevel, VisualObject gdxTree, VisualObject gdxTank) {
+    public Drawer(Level level, Tank tank, VisualLevel gdxLevel, VisualObject gdxTree, VisualObject gdxTank) {
         this.gdxLevel = gdxLevel;
         this.gdxTank = gdxTank;
         this.gdxTree = gdxTree;
@@ -46,8 +41,6 @@ public class GdxDrawer implements Drawer {
         moveRectangleAtTileCenter(groundLayer, gdxTank.getRectangle(), tank.getCoordinates().toGridPoint2());
     }
 
-
-    @Override
     public void drawVisuals(Level level, Tank tank) {
         // render each tile of the level
         levelRenderer.render();
@@ -68,11 +61,7 @@ public class GdxDrawer implements Drawer {
 
         // submit all drawing requests
         batch.end();
-
-
     }
-
-    @Override
     public void processTankMotion(Tank playerTank) {
         // calculate interpolated player screen coordinates
         tileMovement.moveRectangleBetweenTileCenters(gdxTank.getRectangle(), playerTank.getCoordinates().toGridPoint2(),

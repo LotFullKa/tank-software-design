@@ -4,17 +4,21 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.math.GridPoint2;
 
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
-import static com.badlogic.gdx.math.MathUtils.isEqual;
 
-import static ru.mipt.bit.platformer.Tank.motionFinished;
 
+import ru.mipt.bit.platformer.models.*;
+import ru.mipt.bit.platformer.models.actions.Action;
+import ru.mipt.bit.platformer.models.actions.ActionHandler;
+import ru.mipt.bit.platformer.util.Vector2D;
+import ru.mipt.bit.platformer.visuals.Drawer;
+import ru.mipt.bit.platformer.visuals.VisualLevel;
+import ru.mipt.bit.platformer.visuals.VisualObject;
+
+import java.util.ArrayList;
 
 public class GameDesktopLauncher implements ApplicationListener {
-
-    private static final float MOVEMENT_SPEED = 0.4f;
 
     private Drawer drawer;
 
@@ -22,21 +26,33 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private Tank playerTank;
 
+    private ActionHandler actionHandler;
+
+    private PlayerInput inputManager;
+
+
     @Override
     public void create() {
         // create level
-        GridPoint2[] treeObstacleCoordinates = {new GridPoint2(3, 3), new GridPoint2(1, 3)};
-        level = new Level(treeObstacleCoordinates);
+        ArrayList<Vector2D> treeObstacleCoordinates = new ArrayList<Vector2D>();
+        treeObstacleCoordinates.add(new Vector2D(3, 3));
+        treeObstacleCoordinates.add(new Vector2D(1, 3));
+
+        Vector2D leftCorner = new Vector2D(0, 0);
+        Vector2D rightCorner = new Vector2D(9, 7);
+        level = new Level(leftCorner, rightCorner, treeObstacleCoordinates);
 
         // create playerTank
-        GridPoint2 startCoordinates = new GridPoint2(1, 1);
-        float startRotation = 0f;
-        playerTank = new Tank(startCoordinates, startRotation);
+        Vector2D startCoordinates = new Vector2D(1, 1);
+        playerTank = new Tank(startCoordinates, Direction.simpleDirection.UP);
+
+        //actionHandler = new ActionHandler();
+        inputManager = new PlayerInput(playerTank, level);
 
         // create visuals
-        Drawer.VisualObject visualTank = new Drawer.VisualObject("images/tank_blue.png");
-        Drawer.VisualObject visualTree = new Drawer.VisualObject("images/greenTree.png");
-        Drawer.VisualLevel visualLevel = new Drawer.VisualLevel("level.tmx");
+        VisualObject visualTank = new VisualObject("images/tank_blue.png");
+        VisualObject visualTree = new VisualObject("images/greenTree.png");
+        VisualLevel visualLevel = new VisualLevel("level.tmx");
 
         // create drawer
         drawer = new Drawer(level, playerTank, visualLevel, visualTree, visualTank);
@@ -44,32 +60,29 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     @Override
     public void render() {
-        // clear the screen
-        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
-        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+        clear_screen();
 
         // get time passed since the last render
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        PlayerInput.Result input = PlayerInput.chooseDirection();
-        if(input.moveKeyPressed){
-            if (isEqual(playerTank.getMotionProgress(), motionFinished)) {
-                GridPoint2 predict = playerTank.predictCoordinates(input.direction);
-                if (level.freeCoordinates(predict)) {
-                    playerTank.startMotion(input.direction);
-                }
 
-                playerTank.makeTurn(input.direction);
-            }
-        }
+        Action playerAction = inputManager.getAction();
+        ActionHandler.handle(playerAction);
 
         drawer.processTankMotion(playerTank);
 
-        playerTank.updateMotionProgress(deltaTime, MOVEMENT_SPEED);
+        playerTank.updateMotionProgress(deltaTime);
 
         drawer.drawVisuals(level, playerTank);
 
+
     }
+
+    private static void clear_screen() {
+        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+    }
+
     @Override
     public void resize(int width, int height) {
         // do not react to window resizing
