@@ -6,7 +6,7 @@ import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
 
-public class Tank implements GameObject, Livable {
+public class Tank implements GameObject, Livable, Movable {
     private final float motionStarted = 0f;
     private final float motionFinished = 1f;
 
@@ -17,7 +17,9 @@ public class Tank implements GameObject, Livable {
     private float motionProgress;
 
     // TODO: move to constructor parameters
-    private static final float MOVEMENT_SPEED = 0.4f;
+    private final float MOVEMENT_SPEED = 0.4f;
+    private final float bulletMovementSpeed = 0.25f;
+    private final float damagePerBullet = 10f;
 
     private float curHealth;
     private final float fullHealth;
@@ -29,11 +31,12 @@ public class Tank implements GameObject, Livable {
         motionProgress = motionFinished;
 
         // TODO: move to constructor parameters
-        fullHealth = random(50, 100);
+        fullHealth = 100;
         //currentHealth = fullHealth;
-        curHealth = random(1, fullHealth);
+        curHealth = random(20, fullHealth);
     }
 
+    @Override
     public void move(Direction direction, Level level){
         if (isEqual(getMotionProgress(), motionFinished)) {
             Vector2D predict = predictCoordinates(direction);
@@ -43,6 +46,12 @@ public class Tank implements GameObject, Livable {
             makeTurn(direction);
         }
 
+    }
+
+    public Bullet shoot(Level level){
+        Bullet bullet = new Bullet(coordinates.add(direction.getVector()), direction, damagePerBullet, bulletMovementSpeed, this);
+        level.addBullet(bullet);
+        return bullet;
     }
 
     public void startMotion(Direction direction) {
@@ -88,6 +97,11 @@ public class Tank implements GameObject, Livable {
     @Override
     public void updateProgress(float deltaTime) {
         updateMotionProgress(deltaTime);
+    }
+
+    @Override
+    public void encounterBullet(Bullet bullet) {
+        curHealth -= bullet.getDamage();
     }
 
     @Override

@@ -4,9 +4,10 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ru.mipt.bit.platformer.logics.AITanksActionsGenerator;
-import ru.mipt.bit.platformer.logics.ActionsGenerator;
-import ru.mipt.bit.platformer.logics.PlayerActionsGenerator;
+import ru.mipt.bit.platformer.logics.action_generators.AITanksActionsGenerator;
+import ru.mipt.bit.platformer.logics.action_generators.ActionsGenerator;
+import ru.mipt.bit.platformer.logics.action_generators.BulletActionsGenerator;
+import ru.mipt.bit.platformer.logics.action_generators.PlayerActionsGenerator;
 import ru.mipt.bit.platformer.logics.actions.Action;
 import ru.mipt.bit.platformer.logics.level_setup.LevelProvider;
 import ru.mipt.bit.platformer.logics.level_setup.RandomLevelProvider;
@@ -45,8 +46,10 @@ public class GameDesktopLauncher implements ApplicationListener {
         actionGenerators = new ArrayList<>();
         actionGenerators.add(new PlayerActionsGenerator(level, healthBarSettings));
         actionGenerators.add(new AITanksActionsGenerator(level));
+        actionGenerators.add(new BulletActionsGenerator(level));
 
         drawer = new GdxDrawer(level, healthBarSettings);
+        level.subscribe(drawer);
     }
 
     @Override

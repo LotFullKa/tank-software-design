@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.logics;
+package ru.mipt.bit.platformer.logics.action_generators;
 
 import com.badlogic.gdx.Gdx;
 import ru.mipt.bit.platformer.logics.actions.Action;
@@ -14,11 +14,17 @@ import java.util.HashMap;
 public class PlayerActionsGenerator implements ActionsGenerator {
 
     private final HashMap<Integer, Action> keyRegister;
+    private final HashMap<Integer, Boolean> keyPressed;
 
     //public PlayerActionsGenerator(Level level, Drawer drawer) {
     public PlayerActionsGenerator(Level level, HealthBarSettings healthBarSettings) {
         keyRegister = new HashMap<>();
         KeyTools.registerKeys(keyRegister, level, healthBarSettings);
+
+        keyPressed = new HashMap<>();
+        for(Integer key : keyRegister.keySet()){
+            keyPressed.put(key, false);
+        }
     }
 
     @Override
@@ -28,10 +34,16 @@ public class PlayerActionsGenerator implements ActionsGenerator {
 
     public Action getAction() {
         Action result = null;
+        // TODO: gdxInputProcessor
         for (Integer key : keyRegister.keySet()) {
             if (Gdx.input.isKeyPressed(key)) {
-                result = keyRegister.get(key);
-                break;
+                if(!keyPressed.get(key)) {
+                    result = keyRegister.get(key);
+                    keyPressed.put(key, true);
+                    break;
+                }
+            }else {
+                keyPressed.put(key, false);
             }
         }
         if (result != null) {
