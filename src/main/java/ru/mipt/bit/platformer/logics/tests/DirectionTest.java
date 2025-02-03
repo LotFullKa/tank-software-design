@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.logic.tests;
+package ru.mipt.bit.platformer.logics.tests;
 
 //public class DirectionTest {
 //

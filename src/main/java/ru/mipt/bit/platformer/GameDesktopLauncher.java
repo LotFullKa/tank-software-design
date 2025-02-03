@@ -4,16 +4,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ru.mipt.bit.platformer.logic.AITanksActionsGenerator;
-import ru.mipt.bit.platformer.logic.ActionsGenerator;
-import ru.mipt.bit.platformer.logic.PlayerActionsGenerator;
-import ru.mipt.bit.platformer.logic.actions.Action;
-import ru.mipt.bit.platformer.logic.level_setup.LevelProvider;
-import ru.mipt.bit.platformer.logic.level_setup.RandomLevelProvider;
-import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.logics.AITanksActionsGenerator;
+import ru.mipt.bit.platformer.logics.ActionsGenerator;
+import ru.mipt.bit.platformer.logics.PlayerActionsGenerator;
+import ru.mipt.bit.platformer.logics.actions.Action;
+import ru.mipt.bit.platformer.logics.level_setup.LevelProvider;
+import ru.mipt.bit.platformer.logics.level_setup.RandomLevelProvider;
+import ru.mipt.bit.platformer.logics.models.Level;
 import ru.mipt.bit.platformer.util.Vector2D;
 import ru.mipt.bit.platformer.visuals.Drawer;
 import ru.mipt.bit.platformer.visuals.GdxDrawer;
+import ru.mipt.bit.platformer.visuals.HealthBarSettings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,11 +39,14 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void create() {
 
+        // TODO: dependency injection needed
+        HealthBarSettings healthBarSettings = new HealthBarSettings(true);
+
         actionGenerators = new ArrayList<>();
-        actionGenerators.add(new PlayerActionsGenerator(level));
+        actionGenerators.add(new PlayerActionsGenerator(level, healthBarSettings));
         actionGenerators.add(new AITanksActionsGenerator(level));
 
-        drawer = new GdxDrawer(level);
+        drawer = new GdxDrawer(level, healthBarSettings);
     }
 
     @Override

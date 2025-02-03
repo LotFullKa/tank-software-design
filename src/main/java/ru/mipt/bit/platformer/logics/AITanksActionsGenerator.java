@@ -1,10 +1,10 @@
-package ru.mipt.bit.platformer.logic;
+package ru.mipt.bit.platformer.logics;
 
-import ru.mipt.bit.platformer.logic.actions.Action;
-import ru.mipt.bit.platformer.logic.actions.MoveAction;
-import ru.mipt.bit.platformer.logic.models.Direction;
-import ru.mipt.bit.platformer.logic.models.Level;
-import ru.mipt.bit.platformer.logic.models.Tank;
+import ru.mipt.bit.platformer.logics.actions.Action;
+import ru.mipt.bit.platformer.logics.actions.MoveAction;
+import ru.mipt.bit.platformer.logics.models.Direction;
+import ru.mipt.bit.platformer.logics.models.Level;
+import ru.mipt.bit.platformer.logics.models.Tank;
 
 import java.util.ArrayList;
 import java.util.List;

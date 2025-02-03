@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.logic.actions;
+package ru.mipt.bit.platformer.logics.actions;
 
 public interface Action {
     void process();

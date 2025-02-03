@@ -1,9 +1,9 @@
-package ru.mipt.bit.platformer.logic.level_setup;
+package ru.mipt.bit.platformer.logics.level_setup;
 
-import ru.mipt.bit.platformer.logic.models.Direction;
-import ru.mipt.bit.platformer.logic.models.Level;
-import ru.mipt.bit.platformer.logic.models.Tank;
-import ru.mipt.bit.platformer.logic.models.Tree;
+import ru.mipt.bit.platformer.logics.models.Direction;
+import ru.mipt.bit.platformer.logics.models.Level;
+import ru.mipt.bit.platformer.logics.models.Tank;
+import ru.mipt.bit.platformer.logics.models.Tree;
 import ru.mipt.bit.platformer.util.Vector2D;
 
 import java.io.BufferedReader;

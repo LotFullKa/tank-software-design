@@ -1,6 +1,6 @@
-package ru.mipt.bit.platformer.logic;
+package ru.mipt.bit.platformer.logics;
 
-import ru.mipt.bit.platformer.logic.actions.Action;
+import ru.mipt.bit.platformer.logics.actions.Action;
 
 import java.util.Collection;
 

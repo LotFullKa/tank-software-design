@@ -6,22 +6,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import ru.mipt.bit.platformer.logic.models.GameObject;
-import ru.mipt.bit.platformer.logic.models.Livable;
+import ru.mipt.bit.platformer.logics.models.GameObject;
+import ru.mipt.bit.platformer.logics.models.Livable;
 import ru.mipt.bit.platformer.util.GdxGameUtils;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 public class VisualObjectHealthDecorator implements VisualObject {
 
     private final VisualObject wrappee;
+    private HealthBarSettings healthBarSettings;
 
-    public VisualObjectHealthDecorator(VisualObject visualObject){
+    public VisualObjectHealthDecorator(VisualObject visualObject, HealthBarSettings healthBarSettings){
         wrappee = visualObject;
+        this.healthBarSettings = healthBarSettings;
     }
 
 
     private void renderHealthbar(Batch batch) {
-        if (wrappee.getLogicalEntity() instanceof Livable livable) {
+        if (wrappee.getLogicalEntity() instanceof Livable livable && healthBarSettings.isOn()) {
             var health = livable.getRelativeHealth();
             var healthbarTexture = getHealthbarTexture(health);
             var rectangle = createRectangle();

@@ -1,10 +1,11 @@
-package ru.mipt.bit.platformer.logic;
+package ru.mipt.bit.platformer.logics;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.logic.actions.Action;
-import ru.mipt.bit.platformer.logic.actions.NoneAction;
-import ru.mipt.bit.platformer.logic.input_controller.KeyTools;
-import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.logics.actions.Action;
+import ru.mipt.bit.platformer.logics.actions.NoneAction;
+import ru.mipt.bit.platformer.logics.input_controller.KeyTools;
+import ru.mipt.bit.platformer.logics.models.Level;
+import ru.mipt.bit.platformer.visuals.HealthBarSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +15,10 @@ public class PlayerActionsGenerator implements ActionsGenerator {
 
     private final HashMap<Integer, Action> keyRegister;
 
-    public PlayerActionsGenerator(Level level) {
+    //public PlayerActionsGenerator(Level level, Drawer drawer) {
+    public PlayerActionsGenerator(Level level, HealthBarSettings healthBarSettings) {
         keyRegister = new HashMap<>();
-        KeyTools.registerKeys(keyRegister, level);
+        KeyTools.registerKeys(keyRegister, level, healthBarSettings);
     }
 
     @Override
