@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import ru.mipt.bit.platformer.logic.models.GameObject;
 import ru.mipt.bit.platformer.logic.models.Tank;
 import ru.mipt.bit.platformer.util.TileMovement;
 
@@ -25,7 +26,7 @@ public class VisualTank implements VisualObject{
         this.texturePath = texturePath;
     }
 
-    VisualTank(VisualTank deepCopy, Tank logicalTank){
+    public VisualTank(VisualTank deepCopy, Tank logicalTank){
         texture = new Texture(deepCopy.texturePath);
         this.logicalTank = logicalTank;
         graphics = new TextureRegion(texture);
@@ -33,12 +34,9 @@ public class VisualTank implements VisualObject{
         this.texturePath = deepCopy.texturePath;
     }
 
+    @Override
     public Rectangle getRectangle() {
         return rectangle;
-    }
-
-    public TextureRegion getGraphics() {
-        return graphics;
     }
 
     public float getRotation() {
@@ -50,13 +48,20 @@ public class VisualTank implements VisualObject{
         drawTextureRegionUnscaled(batch, graphics, rectangle, getRotation());
     }
 
+    @Override
     public void dispose(){
         texture.dispose();
     }
 
+    @Override
     public void processMotion(TileMovement tileMovement){
         // calculate interpolated player screen coordinates
         tileMovement.moveRectangleBetweenTileCenters(getRectangle(), logicalTank.getCoordinates().toGridPoint2(),
                 logicalTank.getDestCoordinates().toGridPoint2(), logicalTank.getMotionProgress());
+    }
+
+    @Override
+    public GameObject getLogicalEntity() {
+        return logicalTank;
     }
 }

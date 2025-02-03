@@ -3,9 +3,10 @@ package ru.mipt.bit.platformer.logic.models;
 import ru.mipt.bit.platformer.util.Vector2D;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
+import static com.badlogic.gdx.math.MathUtils.random;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
 
-public class Tank implements GameObject {
+public class Tank implements GameObject, Livable {
     private final float motionStarted = 0f;
     private final float motionFinished = 1f;
 
@@ -15,13 +16,22 @@ public class Tank implements GameObject {
 
     private float motionProgress;
 
+    // TODO: move to constructor parameters
     private static final float MOVEMENT_SPEED = 0.4f;
+
+    private float curHealth;
+    private final float fullHealth;
 
     public Tank(Vector2D location, Direction direction) {
         coordinates = new Vector2D(location);
         destCoordinates = new Vector2D(coordinates);
         this.direction = direction;
         motionProgress = motionFinished;
+
+        // TODO: move to constructor parameters
+        fullHealth = random(50, 100);
+        //currentHealth = fullHealth;
+        curHealth = random(1, fullHealth);
     }
 
     public void move(Direction direction, Level level){
@@ -61,10 +71,12 @@ public class Tank implements GameObject {
         motionProgress = motionFinished;
     }
 
+    @Override
     public Vector2D getCoordinates() {
         return coordinates;
     }
 
+    @Override
     public Vector2D getDestCoordinates() {
         return destCoordinates;
     }
@@ -78,11 +90,17 @@ public class Tank implements GameObject {
         updateMotionProgress(deltaTime);
     }
 
+    @Override
     public float getRotation() {
         return direction.getAngle();
     }
 
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public float getRelativeHealth() {
+        return curHealth / fullHealth;
     }
 }

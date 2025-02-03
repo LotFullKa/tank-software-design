@@ -4,14 +4,18 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ru.mipt.bit.platformer.logic.ActionGenerator;
+import ru.mipt.bit.platformer.logic.AITanksActionsGenerator;
+import ru.mipt.bit.platformer.logic.ActionsGenerator;
+import ru.mipt.bit.platformer.logic.PlayerActionsGenerator;
 import ru.mipt.bit.platformer.logic.actions.Action;
-import ru.mipt.bit.platformer.logic.level_setup.FileLevelSetup;
-import ru.mipt.bit.platformer.logic.level_setup.LevelSetup;
+import ru.mipt.bit.platformer.logic.level_setup.LevelProvider;
+import ru.mipt.bit.platformer.logic.level_setup.RandomLevelProvider;
 import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.util.Vector2D;
 import ru.mipt.bit.platformer.visuals.Drawer;
 import ru.mipt.bit.platformer.visuals.GdxDrawer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
@@ -22,26 +26,31 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private Level level;
 
-    private ActionGenerator actionGenerator;
+    private ArrayList<ActionsGenerator> actionGenerators;
+
+
+    public GameDesktopLauncher(Level level){
+        super();
+        this.level = level;
+    }
 
 
     @Override
     public void create() {
-        LevelSetup levelSetup = new FileLevelSetup(
-                "src/main/resources/levels/level1.txt");
-        //LevelSetup levelSetup = new RandomLevelSetup();
-        level = levelSetup.getLevel();
 
-        actionGenerator = new ActionGenerator(level);
+        actionGenerators = new ArrayList<>();
+        actionGenerators.add(new PlayerActionsGenerator(level));
+        actionGenerators.add(new AITanksActionsGenerator(level));
 
         drawer = new GdxDrawer(level);
     }
 
     @Override
     public void render() {
-        clear_screen();
+        clearScreen();
 
-        Collection<Action> actions = actionGenerator.generate();
+        Collection<Action> actions = new ArrayList<>();
+        actionGenerators.forEach(generator -> actions.addAll(generator.generate()));
         actions.forEach(Action::process);
 
         level.updateProgress(Gdx.graphics.getDeltaTime());
@@ -50,7 +59,7 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     }
 
-    private static void clear_screen() {
+    private static void clearScreen() {
         Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
         Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
     }
@@ -78,8 +87,25 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+
+//        LevelProvider levelProvider = new FileLevelProvider(
+//                "src/main/resources/levels/level1.txt");
+
+        // use dependency injection to move construction process
+        LevelProvider levelProvider = new RandomLevelProvider(
+                new Vector2D(0, 0),
+                new Vector2D(7, 7),
+                0.1f, 4
+                );
+
+        Level level = levelProvider.getLevel();
+
         // level width: 10 tiles x 128px, height: 8 tiles x 128px
-        config.setWindowedMode(1280, 1024);
-        new Lwjgl3Application(new GameDesktopLauncher(), config);
+        Vector2D levelSize = level.getSize();
+        int squareTileWidth = 128;
+        config.setWindowedMode((int)(squareTileWidth * levelSize.x()), (int)(squareTileWidth * levelSize.y()));
+        // TODO: generate new level.tmx files for bigger than 8x10 levels (?)
+
+        new Lwjgl3Application(new GameDesktopLauncher(level), config);
     }
 }

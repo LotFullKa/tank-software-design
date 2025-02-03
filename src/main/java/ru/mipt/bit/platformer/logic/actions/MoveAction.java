@@ -4,7 +4,7 @@ import ru.mipt.bit.platformer.logic.models.Direction;
 import ru.mipt.bit.platformer.logic.models.Level;
 import ru.mipt.bit.platformer.logic.models.Tank;
 
-public class MoveAction extends Action{
+public class MoveAction implements Action{
     private final Direction direction;
     private final Tank tank;
     private final Level level;
