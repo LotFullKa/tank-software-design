@@ -3,8 +3,8 @@ package ru.mipt.bit.platformer.logics.level_setup;
 import ru.mipt.bit.platformer.logics.models.*;
 import ru.mipt.bit.platformer.util.Vector2D;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class RandomLevelProvider implements LevelProvider {
     private Level level;

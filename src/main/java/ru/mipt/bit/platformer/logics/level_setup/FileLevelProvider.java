@@ -1,16 +1,15 @@
 package ru.mipt.bit.platformer.logics.level_setup;
 
-import ru.mipt.bit.platformer.logics.models.Direction;
-import ru.mipt.bit.platformer.logics.models.Level;
-import ru.mipt.bit.platformer.logics.models.Tank;
-import ru.mipt.bit.platformer.logics.models.Tree;
+import ru.mipt.bit.platformer.logics.models.*;
 import ru.mipt.bit.platformer.util.Vector2D;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.nio.file.Files;
+import java.util.List;
 
 
 public class FileLevelProvider implements LevelProvider {

@@ -2,6 +2,9 @@ package ru.mipt.bit.platformer.logics.models;
 
 import ru.mipt.bit.platformer.util.Vector2D;
 
+
+import java.util.Objects;
+
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;

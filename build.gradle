@@ -24,6 +24,12 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx:1.12.1"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1"
     implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
+
+    implementation 'org.springframework:spring-context:5.3.29'
+    implementation 'org.springframework:spring-core:5.3.29'
+    implementation 'org.springframework:spring-beans:5.3.29'
+    implementation 'org.springframework.boot:spring-boot-starter:3.1.2'
+
     implementation 'junit:junit:4.13.2'
     implementation 'org.mockito:mockito-core:4.11.0'
     implementation 'org.junit.jupiter:junit-jupiter:5.9.0'

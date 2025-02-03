@@ -11,6 +11,7 @@ import ru.mipt.bit.platformer.visuals.actions.ToggleShowHealthAction;
 import java.util.HashMap;
 
 import static com.badlogic.gdx.Input.Keys.*;
+import static com.badlogic.gdx.Input.Keys.D;
 
 public class KeyTools {
     public static void registerKeys(HashMap<Integer, Action> keyAction, Level level, HealthBarSettings healthBarSettings) {

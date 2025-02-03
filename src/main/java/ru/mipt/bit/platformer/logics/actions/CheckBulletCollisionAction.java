@@ -4,6 +4,8 @@ import ru.mipt.bit.platformer.logics.models.Bullet;
 import ru.mipt.bit.platformer.logics.models.GameObject;
 import ru.mipt.bit.platformer.logics.models.Level;
 
+import java.util.function.DoubleUnaryOperator;
+
 public class CheckBulletCollisionAction implements Action{
     private final Level level;
     private final Bullet bullet;
