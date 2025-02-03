@@ -1,7 +1,9 @@
-package ru.mipt.bit.platformer.models;
+package ru.mipt.bit.platformer.logic.input_controller;
 
-import ru.mipt.bit.platformer.models.actions.Action;
-import ru.mipt.bit.platformer.models.actions.MoveAction;
+import ru.mipt.bit.platformer.logic.actions.Action;
+import ru.mipt.bit.platformer.logic.actions.MoveAction;
+import ru.mipt.bit.platformer.logic.models.Direction;
+import ru.mipt.bit.platformer.logic.models.Level;
 
 import java.util.HashMap;
 

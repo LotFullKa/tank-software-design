@@ -1,8 +1,9 @@
-package ru.mipt.bit.platformer.models;
+package ru.mipt.bit.platformer.logic.input_controller;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.models.actions.Action;
-import ru.mipt.bit.platformer.models.actions.NoneAction;
+import ru.mipt.bit.platformer.logic.actions.Action;
+import ru.mipt.bit.platformer.logic.actions.NoneAction;
+import ru.mipt.bit.platformer.logic.models.Level;
 
 import java.util.HashMap;
 

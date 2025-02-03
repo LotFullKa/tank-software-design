@@ -1,9 +1,9 @@
-package ru.mipt.bit.platformer.models.tests;
+package ru.mipt.bit.platformer.logic.tests;
 
 import org.junit.jupiter.api.Test;
-import ru.mipt.bit.platformer.models.Direction;
-import ru.mipt.bit.platformer.models.Level;
-import ru.mipt.bit.platformer.models.Tank;
+import ru.mipt.bit.platformer.logic.models.Direction;
+import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.logic.models.Tank;
 import ru.mipt.bit.platformer.util.Vector2D;
 
 import java.util.ArrayList;

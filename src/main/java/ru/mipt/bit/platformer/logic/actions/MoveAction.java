@@ -1,8 +1,8 @@
-package ru.mipt.bit.platformer.models.actions;
+package ru.mipt.bit.platformer.logic.actions;
 
-import ru.mipt.bit.platformer.models.Direction;
-import ru.mipt.bit.platformer.models.Level;
-import ru.mipt.bit.platformer.models.Tank;
+import ru.mipt.bit.platformer.logic.models.Direction;
+import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.logic.models.Tank;
 
 public class MoveAction extends Action{
     private final Direction direction;

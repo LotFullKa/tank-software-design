@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Interpolation;
-import ru.mipt.bit.platformer.models.GameObject;
-import ru.mipt.bit.platformer.models.Level;
-import ru.mipt.bit.platformer.models.Tank;
-import ru.mipt.bit.platformer.models.Tree;
+import ru.mipt.bit.platformer.logic.models.GameObject;
+import ru.mipt.bit.platformer.logic.models.Level;
+import ru.mipt.bit.platformer.logic.models.Tank;
+import ru.mipt.bit.platformer.logic.models.Tree;
 import ru.mipt.bit.platformer.util.TileMovement;
+import ru.mipt.bit.platformer.util.Vector2D;
 
 import java.util.ArrayList;
 
@@ -18,8 +20,8 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class GdxDrawer implements Drawer {
     private TiledMap gdxLevel;
-    //private VisualObject gdxTank;
-    //private VisualObject gdxTree;
+    private VisualTank gdxTank;
+    private VisualTree gdxTree;
     private ArrayList<VisualObject> visualObjects;
 
     private MapRenderer levelRenderer;
@@ -27,10 +29,8 @@ public class GdxDrawer implements Drawer {
     private Batch batch;
     private static TiledMapTileLayer groundLayer;
 
-    public GdxDrawer(Level level, TiledMap gdxLevel, VisualTree gdxTree, VisualTank gdxTank) {
-        this.gdxLevel = gdxLevel;
-        //this.gdxTank = gdxTank;
-        //this.gdxTree = gdxTree;
+    public GdxDrawer(Level level) {
+        createVisuals(level);
         visualObjects = new ArrayList<>();
         batch = new SpriteBatch();
         levelRenderer = createSingleLayerMapRenderer(gdxLevel, batch);
@@ -86,6 +86,12 @@ public class GdxDrawer implements Drawer {
         gdxLevel.dispose();
 
         batch.dispose();
+    }
+
+    private void createVisuals(Level level){
+        gdxTank = new VisualTank("images/tank_blue.png", level.getPlayerTank());
+        gdxTree = new VisualTree("images/greenTree.png", new Tree(new Vector2D()));
+        gdxLevel = new TmxMapLoader().load("level.tmx");
     }
 
 }
