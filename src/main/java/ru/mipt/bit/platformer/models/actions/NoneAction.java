@@ -5,6 +5,6 @@ public class NoneAction extends Action{
 
     @Override
     public void process() {
-        // idle
+
     }
 }
