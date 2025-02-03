@@ -6,10 +6,9 @@ import ru.mipt.bit.platformer.util.Vector2D;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.nio.file.Files;
-import java.util.List;
 
 
 public class FileLevelProvider implements LevelProvider {
@@ -33,7 +32,6 @@ public class FileLevelProvider implements LevelProvider {
 
         ParseLevelLinesResult result = parseLevelLines(levelLines);
         Tank playerTank = result.getPlayerTank();
-        //ArrayList<GameObject> gameObjects = result.getGameObjects();
         ArrayList<Tank> tanks = result.getTanks();
         ArrayList<Tree> trees = result.getTrees();
 
@@ -74,16 +72,16 @@ public class FileLevelProvider implements LevelProvider {
     }
 
     private ArrayList<String> readLevel(String filePath) {
-        try(BufferedReader reader = Files.newBufferedReader(Paths.get(filePath)))
-        {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
             ArrayList<String> result = new ArrayList<>();
             String line;
             while ((line = reader.readLine()) != null) {
                 result.add(line);
             }
             return result;
-        }
-        catch(IOException ex) {
+        } catch (IOException | NullPointerException ex) {
             ex.printStackTrace();
             return new ArrayList<>();
         }

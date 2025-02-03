@@ -35,7 +35,6 @@ public class Tank implements GameObject, Livable, Movable {
 
         // TODO: move to constructor parameters
         fullHealth = 100;
-        //currentHealth = fullHealth;
         curHealth = random(20, fullHealth);
     }
 

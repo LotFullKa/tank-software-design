@@ -12,12 +12,12 @@ public class Tree implements GameObject{
     }
 
     public void updateProgress(float deltaTime) {
-        // idle
+
     }
 
     @Override
     public void encounterBullet(Bullet bullet) {
-        //TODO
+
     }
 
     @Override

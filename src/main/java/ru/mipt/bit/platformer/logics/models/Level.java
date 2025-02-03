@@ -48,7 +48,6 @@ public class Level {
     }
 
     public List<GameObject> getObjects() {
-        //return Stream.concat(tanks.stream(), trees.stream()).toList().addAll(bullets.stream().toList());
         List<GameObject> merged = new ArrayList<>();
         merged.addAll(tanks);
         merged.addAll(trees);
@@ -121,31 +120,13 @@ public class Level {
         Iterator<Tank> iterator = tanks.iterator();
         while (iterator.hasNext()) {
             Tank tank = iterator.next();
-            if(tank.getRelativeHealth() <= 0){
+            if (tank.getRelativeHealth() <= 0) {
                 iterator.remove();
-                for(LevelListener subscriber : subcsribers){
+                for (LevelListener subscriber : subcsribers) {
                     subscriber.onDeleteObject(tank);
                 }
             }
-            // TODO: playerTank's death -> gameOver
         }
-
-        // instead of CheckBulletStateAction
-        // (?) seems OCP-bad
-        // but action-oriented code has костыли in the way i implement it
-        //
-//        Iterator<Bullet> iterator = bullets.iterator();
-//        while (iterator.hasNext()) {
-//            Bullet bullet = iterator.next();
-//            GameObject encounterObj = collisionWith(bullet);
-//            if (encounterObj != null && !encounterObj.equals(bullet.getShooter())) {
-//                encounterObj.encounterBullet(bullet);
-//                iterator.remove();
-//                for(LevelListener subscriber : subcsribers){
-//                    subscriber.onDeleteObject(bullet);
-//                }
-//            }
-//        }
     }
 
     public Tank getPlayerTank(){
@@ -156,10 +137,12 @@ public class Level {
         subcsribers.add(subscriber);
     }
 
-    public Vector2D getSize() {
-        int width = max_x - min_x + 1;
-        int height = max_y - min_y + 1;
-        return new Vector2D(width, height);
+    public float getWidth() {
+        return max_x - min_x + 1;
+    }
+
+    public float getHeight() {
+        return max_y - min_y + 1;
     }
 
     synchronized public void removeBullet(Bullet bullet) {

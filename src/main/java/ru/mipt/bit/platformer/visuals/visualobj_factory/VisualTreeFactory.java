@@ -5,15 +5,9 @@ import ru.mipt.bit.platformer.logics.models.Tree;
 import ru.mipt.bit.platformer.visuals.VisualObject;
 import ru.mipt.bit.platformer.visuals.VisualTree;
 
-public class VisualTreeFactory implements VisualObjectFactory {
-    private VisualTree gdxTree;
-
-    public VisualTreeFactory(VisualTree gdxTree) {
-        this.gdxTree = gdxTree;
-    }
-
+public class VisualTreeFactory implements VisualObjectFactory<Tree> {
     @Override
-    public VisualObject createVisualObject(GameObject gameObject) {
-        return new VisualTree(gdxTree, (Tree) gameObject);
+    public VisualObject createVisualObject(Tree tree) {
+        return new VisualTree(tree);
     }
 }

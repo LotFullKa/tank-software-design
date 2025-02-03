@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import org.springframework.beans.factory.annotation.Value;
 import ru.mipt.bit.platformer.logics.models.GameObject;
 import ru.mipt.bit.platformer.logics.models.Tree;
 import ru.mipt.bit.platformer.util.TileMovement;
@@ -15,15 +16,15 @@ public class VisualTree implements VisualObject{
     private final Texture texture;
     private final TextureRegion graphics;
     private final Rectangle rectangle;
-    private final String texturePath;
+    @Value("${texture.tree}")
+    private String texturePath;
     private final Tree logicalTree;
 
-    public VisualTree(String texturePath, Tree logicalTree) {
+    public VisualTree(Tree logicalTree) {
         texture = new Texture(texturePath);
         graphics = new TextureRegion(texture);
         rectangle = createBoundingRectangle(graphics);
         this.logicalTree = logicalTree;
-        this.texturePath = texturePath;
     }
 
     public VisualTree(VisualTree deepCopy, Tree logicalTree){

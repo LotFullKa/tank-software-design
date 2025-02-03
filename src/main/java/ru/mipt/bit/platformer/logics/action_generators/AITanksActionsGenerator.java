@@ -24,9 +24,6 @@ public class AITanksActionsGenerator implements ActionsGenerator{
     public AITanksActionsGenerator(Level level){
         this.level = level;
         timePrevGenerated = Instant.now();
-//        for(Tank tank : level.getTanks()){
-//            frameGeneratedAction.put(tank, false);
-//        }
     }
 
     @Override

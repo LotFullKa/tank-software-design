@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import org.springframework.beans.factory.annotation.Value;
 import ru.mipt.bit.platformer.logics.models.Bullet;
 import ru.mipt.bit.platformer.logics.models.GameObject;
 import ru.mipt.bit.platformer.util.TileMovement;
@@ -11,21 +12,19 @@ import ru.mipt.bit.platformer.util.TileMovement;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.createBoundingRectangle;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled;
 
-// TODO: same as VisualTank -> replace both with VisualMovingObject
-//  -> possible problems with animations\different behavior (can't see now)
 public class VisualBullet implements VisualObject{
     private final Texture texture;
     private final TextureRegion graphics;
     private final Rectangle rectangle;
-    private final String texturePath;
+    @Value("${texture.bullet}")
+    private String texturePath;
     private final Bullet logicalBullet;
 
-    public VisualBullet(String texturePath, Bullet logicalBullet) {
+    public VisualBullet(Bullet logicalBullet) {
         texture = new Texture(texturePath);
         graphics = new TextureRegion(texture);
         rectangle = createBoundingRectangle(graphics);
         this.logicalBullet = logicalBullet;
-        this.texturePath = texturePath;
     }
 
     public VisualBullet(VisualBullet deepCopy, Bullet logicalBullet){

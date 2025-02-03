@@ -12,8 +12,6 @@ import ru.mipt.bit.platformer.logics.level_setup.LevelProvider;
 import ru.mipt.bit.platformer.logics.level_setup.RandomLevelProvider;
 import ru.mipt.bit.platformer.logics.models.Level;
 import ru.mipt.bit.platformer.util.Vector2D;
-import ru.mipt.bit.platformer.visuals.Drawer;
-import ru.mipt.bit.platformer.visuals.GdxDrawer;
 import ru.mipt.bit.platformer.visuals.HealthBarSettings;
 
 import java.util.ArrayList;
@@ -48,11 +46,6 @@ public class AppConfig {
     public Level level(LevelProvider levelProvider) {
         return levelProvider.getLevel(); // singleton creation guarantied
     }
-
-//    @Bean
-//    public Drawer drawer(Level level, HealthBarSettings healthBarSettings) {
-//        return new GdxDrawer(level, healthBarSettings);
-//    }
 
     @Bean
     public HealthBarSettings healthBarSettings(){
